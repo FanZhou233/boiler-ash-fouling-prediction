@@ -60,7 +60,7 @@ def _candidate_dirs() -> list[Path]:
         Path.cwd(),
         script_dir,
         script_dir.parent,
-        script_dir / "results",python ablation_study_english.py --plot tide --save-dir figures --no-show
+        script_dir / "results",
         script_dir.parent / "results",
     ]
 
