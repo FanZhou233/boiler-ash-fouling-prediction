@@ -339,5 +339,5 @@ def TSM_train():
 # TiDE_train()
 # TSM_train()
 # TiDE_train()
-# TiDE()
+TiDE()
 TSMixer()
