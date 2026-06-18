@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+    <!-- Load AdminLTE CSS assets. -->
+    <link href="{{ url_for('static', filename='AdminLTE/dist/css/adminlte.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='AdminLTE/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 导航栏 -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 侧边栏 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <span class="brand-text font-weight-light">实验系统</span>
+        </a>
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                    <li class="nav-item">
+                        <a href="{{ url_for('manage_system') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>首页</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('data_cleaning') }}" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>数据清洗</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('data_prediction') }}" class="nav-link">
+                            <i class="nav-icon fas fa-chart-line"></i>
+                            <p>消融试验</p>
+                        </a>
+                    <li class="nav-item">
+                        <a href="{{ url_for('WOA_scatter') }}" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>  <!-- 使用齿轮图标来表示优化过程 -->
+                            <p>优化过程可视化</p>  <!-- 标签名称 -->
+                        </a>
+                </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- 内容区域 -->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </section>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="{{ url_for('static', filename='AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='AdminLTE/dist/js/adminlte.min.js') }}"></script>
+    {% block scripts %}
+    {% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}WOA View{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="text-center" style="font-size: 2.5em; font-weight: bold; margin-bottom: 30px; color: #333;">
+        WOA超参数优化过程
+    </h1>
+
+    <!-- Scatter Chart Card 1 -->
+    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ scatter_chart | safe }}
+        </div>
+    </div>
+
+    <!-- Scatter Chart Card 2 -->
+    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ scatter_chart_TiDE | safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

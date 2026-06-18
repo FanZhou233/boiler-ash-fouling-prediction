@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Model View{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="text-center" style="font-size: 2.5em; font-weight: bold; margin-bottom: 30px; color: #333;">
+        软/硬阈值数据清洗
+    </h1>
+
+    {% if error %}
+    <div class="alert alert-warning" role="alert">
+        {{ error }}
+    </div>
+    {% else %}
+
+    <!-- Soft Threshold Card -->
+    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ denoised_soft_chart | safe }}
+        </div>
+        <div class="card-body" style="padding: 20px; text-align: center; font-size: 1.1em; color: #333;">
+            <em>残差能量比 = {{ rer_soft | safe }}</em><br>
+            <em>平滑度指数 = {{ smooth_soft | safe }}</em>
+        </div>
+    </div>
+
+    <!-- Hard Threshold Card -->
+    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ denoised_hard_chart | safe }}
+        </div>
+        <div class="card-body" style="padding: 20px; text-align: center; font-size: 1.1em; color: #333;">
+            <em>残差能量比 = {{ rer_hard | safe }}</em><br>
+            <em>平滑度指数 = {{ smooth_hard | safe }}</em>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

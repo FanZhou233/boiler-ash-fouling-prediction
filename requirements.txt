@@ -1,0 +1,16 @@
+flask
+flask-login
+flask-wtf
+wtforms
+numpy
+pandas
+scipy
+matplotlib
+PyWavelets
+scikit-learn
+torch
+darts
+mealpy
+vmdpy
+pyecharts
+python-dotenv

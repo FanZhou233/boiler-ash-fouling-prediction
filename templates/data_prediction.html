@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction View{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="text-center" style="font-size: 2.5em; font-weight: bold; margin-bottom: 30px; color: #333;">
+        消融试验模型对比
+    </h1>
+
+    <!-- TSMixer模型消融试验对比 -->
+    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ TSMixer_chart | safe }}
+        </div>
+        <table class="table table-striped table-bordered" style="border-radius: 10px;">
+            <thead style="background-color: #f7f7f7; color: #333;">
+                <tr>
+                    <th>实验配置</th>
+                    <th>平均百分比误差 (MAPE)</th>
+                    <th>绝对误差 (Mae)</th>
+                    <th>均方误差 (MSE)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>VMD+TSMixer+WOA</td>
+                    <td>{{ VMD_TSMixer_WOA_mape | safe }}</td>
+                    <td>{{ VMD_TSMixer_WOA_mae | safe }}</td>
+                    <td>{{ VMD_TSMixer_WOA_mse | safe }}</td>
+                </tr>
+                <tr>
+                    <td>WOA+TSMixer</td>
+                    <td>{{ TSMixer_WOA_mape | safe }}</td>
+                    <td>{{ TSMixer_WOA_mae | safe }}</td>
+                    <td>{{ TSMixer_WOA_mse | safe }}</td>
+                </tr>
+                <tr>
+                    <td>VMD+TSMixer</td>
+                    <td>{{ VMD_TSMixer_mape | safe }}</td>
+                    <td>{{ VMD_TSMixer_mae | safe }}</td>
+                    <td>{{ VMD_TSMixer_mse | safe }}</td>
+                </tr>
+                <tr>
+                    <td>TSMixer</td>
+                    <td>{{ TSMixer_mape | safe }}</td>
+                    <td>{{ TSMixer_mae | safe }}</td>
+                    <td>{{ TSMixer_mse | safe }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ errors_chart | safe }}
+        </div>
+    </div>
+
+    <!-- TiDE模型消融试验对比 -->
+    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            <h5 style="font-size: 1.5em; color: #333;">TiDE模型消融试验结果对比</h5>
+            {{ TiDE_chart | safe }}
+        </div>
+        <table class="table table-striped table-bordered" style="border-radius: 10px;">
+            <thead style="background-color: #f7f7f7; color: #333;">
+                <tr>
+                    <th>实验配置</th>
+                    <th>平均百分比误差 (MAPE)</th>
+                    <th>绝对误差 (Mae)</th>
+                    <th>均方误差 (MSE)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>VMD+TiDE+WOA</td>
+                    <td>{{ VMD_TiDE_WOA_mape | safe }}</td>
+                    <td>{{ VMD_TiDE_WOA_mae | safe }}</td>
+                    <td>{{ VMD_TiDE_WOA_mse | safe }}</td>
+                </tr>
+                <tr>
+                    <td>WOA+TiDE</td>
+                    <td>{{ TiDE_WOA_mape | safe }}</td>
+                    <td>{{ TiDE_WOA_mae | safe }}</td>
+                    <td>{{ TiDE_WOA_mse | safe }}</td>
+                </tr>
+                <tr>
+                    <td>VMD+TiDE</td>
+                    <td>{{ VMD_TiDE_mape | safe }}</td>
+                    <td>{{ VMD_TiDE_mae | safe }}</td>
+                    <td>{{ VMD_TiDE_mse | safe }}</td>
+                </tr>
+                <tr>
+                    <td>TiDE</td>
+                    <td>{{ TiDE_mape | safe }}</td>
+                    <td>{{ TiDE_mae | safe }}</td>
+                    <td>{{ TiDE_mse | safe }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="card-body" style="text-align: center; padding: 20px;">
+            {{ TiDE_error_chart | safe }}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
