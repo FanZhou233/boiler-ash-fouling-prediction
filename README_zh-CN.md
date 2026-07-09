@@ -42,7 +42,38 @@ Flask 可视化展示
 - 可视化平台：使用 Flask、AdminLTE 和 Pyecharts 展示数据清洗、预测结果、误差指标与优化过程。
 - 权限入口：提供普通用户和管理员两类演示账号。
 
-## 系统效果
+## 系统界面
+
+系统前端采用深蓝与青色为主的工业科技风格，并提供中英文即时切换。登录后可在统一工作台中完成数据预处理、模型评估和超参数优化结果查看。
+
+### 登录入口
+
+普通用户与管理员拥有独立入口，登录页展示系统定位、演示账号及语言切换功能。
+
+<p align="center">
+  <img src="static/login_page.png" alt="普通用户登录页面" width="49%">
+  <img src="static/admin_login_page.png" alt="管理员登录页面" width="49%">
+</p>
+
+### 系统概览
+
+概览页集中展示系统技术路线与主要能力，包括小波去噪、VMD 分解、TSMixer / TiDE 预测以及 WOA 参数优化。
+
+![系统概览](static/manage_system.png)
+
+### 消融实验工作台
+
+消融实验页面通过交互式预测曲线、误差指标表和模型配置对比，评估 VMD 与 WOA 对不同预测模型的贡献。
+
+![消融实验工作台](static/data_prediction.png)
+
+### WOA 超参数优化
+
+优化页面使用三维散点图展示输入窗口、输出窗口、隐藏层规模与 MAPE 之间的关系。
+
+![WOA 超参数优化过程](static/woa_scatter_page.png)
+
+## 实验结果
 
 ### TSMixer 消融实验
 

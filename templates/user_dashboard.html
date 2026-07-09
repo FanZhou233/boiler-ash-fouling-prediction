@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSBAF</title>
+    <link href="{{ url_for('static', filename='AdminLTE/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/system.css') }}" rel="stylesheet">
+</head>
+<body>
+<main style="min-height:100vh;padding:30px;background:var(--canvas)">
+    <div class="topbar-actions" style="justify-content:flex-end;margin-bottom:20px">
+        <button type="button" class="soft-button lang-switch"><i class="fas fa-globe-asia"></i><span data-i18n="language">EN</span></button>
+        <a class="soft-button" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i><span data-i18n="logout">退出登录</span></a>
+    </div>
+    <section class="hero-card">
+        <img src="{{ url_for('static', filename='system-hero-v2.png') }}" alt="Power plant analytics dashboard">
+        <div class="hero-copy">
+            <div class="hero-kicker">PSBAF</div>
+            <h1 data-i18n="userTitle">预测系统</h1>
+            <p data-i18n="userDesc">当前账号已成功登录。管理员可进入完整的数据分析与模型评估工作台。</p>
+        </div>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='js/system.js') }}"></script>
+</body>
+</html>

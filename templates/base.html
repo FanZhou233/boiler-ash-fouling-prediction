@@ -1,83 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dashboard{% endblock %}</title>
-    <!-- Load AdminLTE CSS assets. -->
+    <title>{% block title %}PSBAF{% endblock %}</title>
     <link href="{{ url_for('static', filename='AdminLTE/dist/css/adminlte.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='AdminLTE/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <!-- 引入 Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/system.css') }}" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-    <!-- 导航栏 -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav align-items-center">
             <li class="nav-item">
-                <a class="nav-link" href="#" role="button"><i class="fas fa-bars"></i></a>
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </li>
+            <li class="nav-item d-none d-sm-block">
+                <span class="topbar-title" data-i18n="topTitle">工业时序智能分析平台</span>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-            </li>
-        </ul>
+        <div class="ml-auto topbar-actions">
+            <button type="button" class="soft-button lang-switch">
+                <i class="fas fa-globe-asia"></i>
+                <span data-i18n="language">EN</span>
+            </button>
+            <a class="soft-button" href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span data-i18n="logout">退出登录</span>
+            </a>
+        </div>
     </nav>
 
-    <!-- 侧边栏 -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="#" class="brand-link">
-            <span class="brand-text font-weight-light">实验系统</span>
+    <aside class="main-sidebar elevation-4">
+        <a href="{{ url_for('manage_system') }}" class="brand-link">
+            <span class="brand-mark"><i class="fas fa-chart-line"></i></span>
+            <span>
+                <span class="brand-name">PSBAF</span>
+                <small class="brand-caption" data-i18n="brandCaption">锅炉灰污智能预测</small>
+            </span>
         </a>
         <div class="sidebar">
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+            <nav>
+                <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
                     <li class="nav-item">
-                        <a href="{{ url_for('manage_system') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>首页</p>
+                        <a href="{{ url_for('manage_system') }}" class="nav-link {% if request.endpoint == 'manage_system' %}active{% endif %}">
+                            <i class="nav-icon fas fa-th-large"></i><p data-i18n="navHome">系统概览</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url_for('data_cleaning') }}" class="nav-link">
-                            <i class="nav-icon fas fa-cogs"></i>
-                            <p>数据清洗</p>
+                        <a href="{{ url_for('data_cleaning') }}" class="nav-link {% if request.endpoint == 'data_cleaning' %}active{% endif %}">
+                            <i class="nav-icon fas fa-wave-square"></i><p data-i18n="navCleaning">数据清洗</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url_for('data_prediction') }}" class="nav-link">
-                            <i class="nav-icon fas fa-chart-line"></i>
-                            <p>消融试验</p>
+                        <a href="{{ url_for('data_prediction') }}" class="nav-link {% if request.endpoint == 'data_prediction' %}active{% endif %}">
+                            <i class="nav-icon fas fa-chart-area"></i><p data-i18n="navPrediction">消融实验</p>
                         </a>
+                    </li>
                     <li class="nav-item">
-                        <a href="{{ url_for('woa_scatter_page') }}" class="nav-link">
-                            <i class="nav-icon fas fa-cogs"></i>  <!-- 使用齿轮图标来表示优化过程 -->
-                            <p>优化过程可视化</p>  <!-- 标签名称 -->
+                        <a href="{{ url_for('woa_scatter_page') }}" class="nav-link {% if request.endpoint == 'woa_scatter_page' %}active{% endif %}">
+                            <i class="nav-icon fas fa-project-diagram"></i><p data-i18n="navOptimization">优化过程</p>
                         </a>
-                </li>
+                    </li>
                 </ul>
             </nav>
         </div>
     </aside>
 
-    <!-- 内容区域 -->
     <div class="content-wrapper">
         <section class="content">
-            <div class="container-fluid">
-                {% block content %}
-                {% endblock %}
-            </div>
+            <div class="container-fluid">{% block content %}{% endblock %}</div>
         </section>
     </div>
-
-    <!-- 脚本 -->
-    <script src="{{ url_for('static', filename='AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='AdminLTE/dist/js/adminlte.min.js') }}"></script>
-    {% block scripts %}
-    {% endblock %}
 </div>
+<script src="{{ url_for('static', filename='AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='AdminLTE/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/system.js') }}"></script>
+{% block scripts %}{% endblock %}
 </body>
 </html>

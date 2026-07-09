@@ -1,25 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}WOA View{% endblock %}
+{% block title %}PSBAF · WOA Optimization{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="text-center" style="font-size: 2.5em; font-weight: bold; margin-bottom: 30px; color: #333;">
-        WOA超参数优化过程
-    </h1>
+<header class="page-heading">
+    <div class="eyebrow" data-i18n="optimizationEyebrow">HYPERPARAMETER SEARCH</div>
+    <h1 data-i18n="optimizationTitle">WOA 超参数优化过程</h1>
+    <p data-i18n="optimizationDesc">以三维散点视图观察不同超参数组合与目标函数之间的关系。</p>
+</header>
 
-    <!-- Scatter Chart Card 1 -->
-    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ scatter_chart | safe }}
+<article class="system-card">
+    <header class="system-card-header">
+        <div>
+            <h2 data-i18n="woaTsmixer">TSMixer 参数搜索</h2>
+            <p data-i18n="woaTsmixerDesc">WOA 在 TSMixer 参数空间中的搜索分布。</p>
         </div>
-    </div>
+        <span class="model-badge">TSMIXER</span>
+    </header>
+    <div class="chart-panel">{{ scatter_chart | safe }}</div>
+</article>
 
-    <!-- Scatter Chart Card 2 -->
-    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ scatter_chart_TiDE | safe }}
+<article class="system-card">
+    <header class="system-card-header">
+        <div>
+            <h2 data-i18n="woaTide">TiDE 参数搜索</h2>
+            <p data-i18n="woaTideDesc">WOA 在 TiDE 参数空间中的搜索分布。</p>
         </div>
-    </div>
-</div>
+        <span class="model-badge">TIDE</span>
+    </header>
+    <div class="chart-panel">{{ scatter_chart_TiDE | safe }}</div>
+</article>
 {% endblock %}

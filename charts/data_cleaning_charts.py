@@ -5,78 +5,85 @@ from __future__ import annotations
 from pyecharts import options as opts
 from pyecharts.charts import Line
 
+from charts.theme import ACTUAL_COLOR, BLUE, CYAN, global_line_opts, init_opts, line_style
 from data_cleaning import load_clean_factor_data, residual_energy_ratio, smoothness_index
+
+
+def _denoising_chart(
+    time_index,
+    original_signal,
+    denoised_signal,
+    series_name: str,
+    color: str,
+) -> str:
+    """Build a consistently styled denoising comparison chart."""
+
+    signal_min = min(float(original_signal.min()), float(denoised_signal.min()))
+    signal_max = max(float(original_signal.max()), float(denoised_signal.max()))
+    padding = max((signal_max - signal_min) * 0.08, 0.01)
+
+    chart = (
+        Line(init_opts())
+        .add_xaxis(time_index.tolist())
+        .add_yaxis(
+            "原始信号 / Original",
+            original_signal.tolist(),
+            is_symbol_show=False,
+            is_smooth=False,
+            linestyle_opts=line_style(ACTUAL_COLOR, width=1, opacity=0.58),
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .add_yaxis(
+            series_name,
+            denoised_signal.tolist(),
+            is_symbol_show=False,
+            is_smooth=True,
+            linestyle_opts=line_style(color, width=2),
+            label_opts=opts.LabelOpts(is_show=False),
+        )
+        .set_global_opts(
+            **global_line_opts(
+                "采样点 / Sample",
+                "清洁因子 / Cleaning factor",
+                signal_min - padding,
+                signal_max + padding,
+            )
+        )
+    )
+    return chart.render_embed()
 
 
 def denoised_soft_chart() -> tuple[str, float, float]:
     """Render the soft-threshold denoising chart and quality indicators."""
 
     denoised_soft, _, _, original_signal, time_index = load_clean_factor_data()
-    chart = (
-        Line()
-        .add_xaxis(time_index.tolist())
-        .add_yaxis(
-            "原始信号",
-            original_signal.tolist(),
-            is_smooth=True,
-            color="gray",
-            label_opts=opts.LabelOpts(is_show=False),
-        )
-        .add_yaxis(
-            "软阈值去噪",
-            denoised_soft.tolist(),
-            is_smooth=True,
-            color="blue",
-            label_opts=opts.LabelOpts(is_show=False),
-        )
-        .set_global_opts(
-            title_opts=opts.TitleOpts(title="小波去噪 - 软阈值"),
-            xaxis_opts=opts.AxisOpts(name="检查点"),
-            yaxis_opts=opts.AxisOpts(
-                name="清洁因子",
-                min_=round(min(original_signal), 2),
-                max_=round(max(original_signal), 2),
-            ),
-            datazoom_opts=opts.DataZoomOpts(),
-        )
+    chart = _denoising_chart(
+        time_index,
+        original_signal,
+        denoised_soft,
+        "软阈值去噪 / Soft threshold",
+        CYAN,
     )
-    rer_soft = residual_energy_ratio(original_signal, denoised_soft)
-    smooth_soft = smoothness_index(denoised_soft)
-    return chart.render_embed(), rer_soft, smooth_soft
+    return (
+        chart,
+        residual_energy_ratio(original_signal, denoised_soft),
+        smoothness_index(denoised_soft),
+    )
 
 
 def denoised_hard_chart() -> tuple[str, float, float]:
     """Render the hard-threshold denoising chart and quality indicators."""
 
     _, denoised_hard, _, original_signal, time_index = load_clean_factor_data()
-    chart = (
-        Line()
-        .add_xaxis(time_index.tolist())
-        .add_yaxis(
-            "原始信号",
-            original_signal.tolist(),
-            is_smooth=True,
-            color="gray",
-            label_opts=opts.LabelOpts(is_show=False),
-        )
-        .add_yaxis(
-            "硬阈值去噪",
-            denoised_hard.tolist(),
-            is_smooth=True,
-            color="red",
-            label_opts=opts.LabelOpts(is_show=False),
-        )
-        .set_global_opts(
-            title_opts=opts.TitleOpts(title="小波去噪 - 硬阈值"),
-            xaxis_opts=opts.AxisOpts(name="检查点"),
-            yaxis_opts=opts.AxisOpts(
-                name="清洁因子",
-                min_=round(min(original_signal), 2) - 0.03,
-                max_=round(max(original_signal), 2) + 0.03,
-            ),
-            datazoom_opts=opts.DataZoomOpts(),
-        )
+    chart = _denoising_chart(
+        time_index,
+        original_signal,
+        denoised_hard,
+        "硬阈值去噪 / Hard threshold",
+        BLUE,
     )
-    rer_hard = residual_energy_ratio(original_signal, denoised_hard)
-    smooth_hard = smoothness_index(denoised_hard)
-    return chart.render_embed(), rer_hard, smooth_hard
+    return (
+        chart,
+        residual_energy_ratio(original_signal, denoised_hard),
+        smoothness_index(denoised_hard),
+    )

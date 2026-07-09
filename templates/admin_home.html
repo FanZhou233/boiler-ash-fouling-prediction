@@ -1,15 +1,35 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Home{% endblock %}
+{% block title %}PSBAF · Overview{% endblock %}
 
 {% block content %}
-<div class="card" style="background-color: #f9f9f9; border-radius: 10px; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h1 style="font-size: 2.5em; font-weight: bold; color: #333; text-align: center; margin-bottom: 20px; font-family: '幼圆', sans-serif;">
-    集成智能优化算法和神经网络的燃煤电站锅炉灰污预测系统
-    </h1>
-
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <img src="static/Background.png" alt="省煤器清洁因子" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" />
+<section class="hero-card">
+    <img src="{{ url_for('static', filename='system-hero-v2.png') }}" alt="Power plant intelligent control room">
+    <div class="hero-copy">
+        <div class="hero-kicker" data-i18n="heroKicker">POWER PLANT INTELLIGENCE</div>
+        <h1 data-i18n="heroTitle">燃煤电站锅炉灰污预测系统</h1>
+        <p data-i18n="heroDesc">集成小波去噪、VMD 多尺度分解、TSMixer / TiDE 时序预测与 WOA 智能优化，形成从数据处理到结果解释的一体化分析流程。</p>
+        <div class="hero-tags">
+            <span>Wavelet</span><span>VMD</span><span>TSMixer</span><span>TiDE</span><span>WOA</span>
+        </div>
     </div>
-</div>
+</section>
+
+<section class="feature-grid">
+    <article class="feature-card">
+        <i class="fas fa-wave-square"></i>
+        <h3 data-i18n="featureCleaning">信号预处理</h3>
+        <p data-i18n="featureCleaningDesc">通过软、硬阈值小波去噪改善清洁因子序列质量。</p>
+    </article>
+    <article class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h3 data-i18n="featurePrediction">多模型预测</h3>
+        <p data-i18n="featurePredictionDesc">对比 TSMixer、TiDE 及其 VMD 增强模型的预测性能。</p>
+    </article>
+    <article class="feature-card">
+        <i class="fas fa-project-diagram"></i>
+        <h3 data-i18n="featureOptimization">智能参数寻优</h3>
+        <p data-i18n="featureOptimizationDesc">利用 WOA 搜索关键超参数，并以三维视图呈现优化轨迹。</p>
+    </article>
+</section>
 {% endblock %}

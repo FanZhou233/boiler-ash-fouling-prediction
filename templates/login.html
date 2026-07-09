@@ -1,79 +1,50 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- 引入 Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-size: cover; /* 覆盖整个页面 */
-            background-position: center; /* 居中背景图片 */
-            display: flex; /* 使用 Flexbox 布局 */
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            height: 100vh; /* 视口高度，确保 body 元素占满整个屏幕 */
-            margin: 0; /* 移除默认的 margin */
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #121c75; /* 设置背景颜色为白色天蓝色#87CEEB */
-            color: #fff; /* 设置文本颜色为白色，以便在黑色背景下可见 */
-        }
-
-        .form-login {
-            opacity: 1;
-            max-width: 800px;
-            padding: 100px;
-            margin: auto;
-            background-color: #fff; /* 设置登录框背景颜色为白色 */
-            border-radius: 20px; /* 添加圆角 */
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 1); /* 添加阴影效果 */
-            color: #000; /* 设置登录框内文本颜色为黑色 */
-        }
-
-        .form-login .form-control {
-            position: relative;
-            box-sizing: border-box;
-            height: auto;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        .form-login .form-control:focus {
-            z-index: 2;
-        }
-
-        .form-login-heading {
-            font-family: 'YouYuan', '幼圆', Arial, sans-serif; /* 添加幼圆体，后面是备用字体 */
-        }
-    </style>
+    <title>PSBAF · Sign in</title>
+    <link href="{{ url_for('static', filename='AdminLTE/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='AdminLTE/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/system.css') }}" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <form class="form-login" method="post">
-        <h2 class="form-login-heading">系统登录</h2>
-        {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.username.label(class="sr-only") }}
-            {{ form.username(class="form-control", placeholder="Username") }}
+<main class="auth-page">
+    <section class="auth-visual">
+        <img src="{{ url_for('static', filename='system-hero-v2.png') }}" alt="Power plant analytics dashboard">
+        <div class="auth-visual-copy">
+            <div class="hero-kicker" data-i18n="loginEyebrow">PSBAF · INDUSTRIAL AI</div>
+            <h1 data-i18n="loginHeroTitle">让锅炉灰污趋势变得可预测</h1>
+            <p data-i18n="loginHeroDesc">融合信号分解、深度时序模型与智能优化算法，为锅炉运行分析提供清晰、可信的预测依据。</p>
         </div>
-        <div class="form-group">
-            {{ form.password.label(class="sr-only") }}
-            {{ form.password(class="form-control", placeholder="Password") }}
-        </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
-        </div>
-        <div class="form-group">
-            <a href="/register" class="btn btn-lg btn-secondary btn-block">注册</a>
-        </div>
-    </form>
-</div>
-
-<!-- 引入 Bootstrap JS 和依赖 -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </section>
+    <section class="auth-panel">
+        <button type="button" class="soft-button lang-switch auth-lang"><i class="fas fa-globe-asia"></i><span data-i18n="language">EN</span></button>
+        <form class="auth-box" method="post">
+            <div class="auth-logo">
+                <span class="brand-mark"><i class="fas fa-chart-line"></i></span>
+                <span><strong>PSBAF</strong><span data-i18n="brandCaption">锅炉灰污智能预测</span></span>
+            </div>
+            <h2 data-i18n="loginTitle">欢迎回来</h2>
+            <p class="auth-subtitle" data-i18n="loginSubtitle">登录后进入锅炉灰污预测与分析平台。</p>
+            {{ form.hidden_tag() }}
+            {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+            <div class="form-group">
+                <label class="form-label" data-i18n="username">用户名</label>
+                {{ form.username(class="form-control", placeholder="请输入用户名", data_i18n_placeholder="usernamePlaceholder") }}
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="password">密码</label>
+                {{ form.password(class="form-control", placeholder="请输入密码", data_i18n_placeholder="passwordPlaceholder") }}
+            </div>
+            {{ form.submit(class="primary-button btn-block", value="登录系统", data_i18n="loginButton") }}
+            <div class="auth-meta">
+                <span><span data-i18n="demoHint">本地演示账号</span>：User / User</span>
+                <a href="{{ url_for('admin_login') }}" data-i18n="adminEntry">管理员入口</a>
+            </div>
+        </form>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='js/system.js') }}"></script>
 </body>
 </html>

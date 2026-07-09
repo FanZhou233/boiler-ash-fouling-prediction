@@ -1,40 +1,45 @@
 {% extends "base.html" %}
 
-{% block title %}Model View{% endblock %}
+{% block title %}PSBAF · Data Cleaning{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="text-center" style="font-size: 2.5em; font-weight: bold; margin-bottom: 30px; color: #333;">
-        软/硬阈值数据清洗
-    </h1>
+<header class="page-heading">
+    <div class="eyebrow" data-i18n="cleaningEyebrow">SIGNAL PREPROCESSING</div>
+    <h1 data-i18n="cleaningTitle">数据清洗与质量评估</h1>
+    <p data-i18n="cleaningDesc">对比小波软阈值与硬阈值去噪效果，结合残差能量比和平滑度指标评估信号质量。</p>
+</header>
 
-    {% if error %}
-    <div class="alert alert-warning" role="alert">
-        {{ error }}
+{% if error %}
+<div class="alert alert-warning system-card">{{ error }}</div>
+{% else %}
+<article class="system-card">
+    <header class="system-card-header">
+        <div>
+            <h2 data-i18n="softTitle">软阈值小波去噪</h2>
+            <p data-i18n="softDesc">保留信号连续性，获得更平滑的清洁因子变化趋势。</p>
+        </div>
+        <span class="model-badge">SOFT</span>
+    </header>
+    <div class="chart-panel">{{ denoised_soft_chart | safe }}</div>
+    <div class="metric-strip">
+        <div class="metric"><span data-i18n="rer">残差能量比</span><strong>{{ rer_soft | safe }}</strong></div>
+        <div class="metric"><span data-i18n="smooth">平滑度指数</span><strong>{{ smooth_soft | safe }}</strong></div>
     </div>
-    {% else %}
+</article>
 
-    <!-- Soft Threshold Card -->
-    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ denoised_soft_chart | safe }}
+<article class="system-card">
+    <header class="system-card-header">
+        <div>
+            <h2 data-i18n="hardTitle">硬阈值小波去噪</h2>
+            <p data-i18n="hardDesc">直接滤除低于阈值的小波系数，突出主要信号结构。</p>
         </div>
-        <div class="card-body" style="padding: 20px; text-align: center; font-size: 1.1em; color: #333;">
-            <em>残差能量比 = {{ rer_soft | safe }}</em><br>
-            <em>平滑度指数 = {{ smooth_soft | safe }}</em>
-        </div>
+        <span class="model-badge">HARD</span>
+    </header>
+    <div class="chart-panel">{{ denoised_hard_chart | safe }}</div>
+    <div class="metric-strip">
+        <div class="metric"><span data-i18n="rer">残差能量比</span><strong>{{ rer_hard | safe }}</strong></div>
+        <div class="metric"><span data-i18n="smooth">平滑度指数</span><strong>{{ smooth_hard | safe }}</strong></div>
     </div>
-
-    <!-- Hard Threshold Card -->
-    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ denoised_hard_chart | safe }}
-        </div>
-        <div class="card-body" style="padding: 20px; text-align: center; font-size: 1.1em; color: #333;">
-            <em>残差能量比 = {{ rer_hard | safe }}</em><br>
-            <em>平滑度指数 = {{ smooth_hard | safe }}</em>
-        </div>
-    </div>
-    {% endif %}
-</div>
+</article>
+{% endif %}
 {% endblock %}

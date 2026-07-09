@@ -1,106 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %}Prediction View{% endblock %}
+{% block title %}PSBAF · Ablation Study{% endblock %}
+
+{% macro result_table(prefix) %}
+<div class="table-responsive">
+    <table class="result-table">
+        <thead>
+            <tr>
+                <th data-i18n="config">实验配置</th><th>MAPE</th><th>MAE</th><th>MSE</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if prefix == 'tsmixer' %}
+            <tr><td>VMD + TSMixer + WOA</td><td>{{ VMD_TSMixer_WOA_mape }}</td><td>{{ VMD_TSMixer_WOA_mae }}</td><td>{{ VMD_TSMixer_WOA_mse }}</td></tr>
+            <tr><td>TSMixer + WOA</td><td>{{ TSMixer_WOA_mape }}</td><td>{{ TSMixer_WOA_mae }}</td><td>{{ TSMixer_WOA_mse }}</td></tr>
+            <tr><td>VMD + TSMixer</td><td>{{ VMD_TSMixer_mape }}</td><td>{{ VMD_TSMixer_mae }}</td><td>{{ VMD_TSMixer_mse }}</td></tr>
+            <tr><td>TSMixer</td><td>{{ TSMixer_mape }}</td><td>{{ TSMixer_mae }}</td><td>{{ TSMixer_mse }}</td></tr>
+        {% else %}
+            <tr><td>VMD + TiDE + WOA</td><td>{{ VMD_TiDE_WOA_mape }}</td><td>{{ VMD_TiDE_WOA_mae }}</td><td>{{ VMD_TiDE_WOA_mse }}</td></tr>
+            <tr><td>TiDE + WOA</td><td>{{ TiDE_WOA_mape }}</td><td>{{ TiDE_WOA_mae }}</td><td>{{ TiDE_WOA_mse }}</td></tr>
+            <tr><td>VMD + TiDE</td><td>{{ VMD_TiDE_mape }}</td><td>{{ VMD_TiDE_mae }}</td><td>{{ VMD_TiDE_mse }}</td></tr>
+            <tr><td>TiDE</td><td>{{ TiDE_mape }}</td><td>{{ TiDE_mae }}</td><td>{{ TiDE_mse }}</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endmacro %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="text-center" style="font-size: 2.5em; font-weight: bold; margin-bottom: 30px; color: #333;">
-        消融试验模型对比
-    </h1>
+<header class="page-heading">
+    <div class="eyebrow" data-i18n="predictionEyebrow">ABLATION STUDY</div>
+    <h1 data-i18n="predictionTitle">预测模型消融实验</h1>
+    <p data-i18n="predictionDesc">通过统一误差指标比较 VMD 分解和 WOA 优化对 TSMixer、TiDE 模型的贡献。</p>
+</header>
 
-    <!-- TSMixer模型消融试验对比 -->
-    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ TSMixer_chart | safe }}
-        </div>
-        <table class="table table-striped table-bordered" style="border-radius: 10px;">
-            <thead style="background-color: #f7f7f7; color: #333;">
-                <tr>
-                    <th>实验配置</th>
-                    <th>平均百分比误差 (MAPE)</th>
-                    <th>绝对误差 (Mae)</th>
-                    <th>均方误差 (MSE)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>VMD+TSMixer+WOA</td>
-                    <td>{{ VMD_TSMixer_WOA_mape | safe }}</td>
-                    <td>{{ VMD_TSMixer_WOA_mae | safe }}</td>
-                    <td>{{ VMD_TSMixer_WOA_mse | safe }}</td>
-                </tr>
-                <tr>
-                    <td>WOA+TSMixer</td>
-                    <td>{{ TSMixer_WOA_mape | safe }}</td>
-                    <td>{{ TSMixer_WOA_mae | safe }}</td>
-                    <td>{{ TSMixer_WOA_mse | safe }}</td>
-                </tr>
-                <tr>
-                    <td>VMD+TSMixer</td>
-                    <td>{{ VMD_TSMixer_mape | safe }}</td>
-                    <td>{{ VMD_TSMixer_mae | safe }}</td>
-                    <td>{{ VMD_TSMixer_mse | safe }}</td>
-                </tr>
-                <tr>
-                    <td>TSMixer</td>
-                    <td>{{ TSMixer_mape | safe }}</td>
-                    <td>{{ TSMixer_mae | safe }}</td>
-                    <td>{{ TSMixer_mse | safe }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ errors_chart | safe }}
-        </div>
-    </div>
+<article class="system-card">
+    <header class="system-card-header">
+        <div><h2 data-i18n="tsmixerTitle">TSMixer 模型组</h2><p data-i18n="tsmixerDesc">比较基础模型、VMD 增强、WOA 优化与完整组合。</p></div>
+        <span class="model-badge">TSMIXER</span>
+    </header>
+    <div class="chart-panel">{{ TSMixer_chart | safe }}</div>
+    {{ result_table('tsmixer') }}
+    <div class="chart-panel">{{ errors_chart | safe }}</div>
+</article>
 
-    <!-- TiDE模型消融试验对比 -->
-    <div class="card" style="border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-bottom: 30px;">
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            <h5 style="font-size: 1.5em; color: #333;">TiDE模型消融试验结果对比</h5>
-            {{ TiDE_chart | safe }}
-        </div>
-        <table class="table table-striped table-bordered" style="border-radius: 10px;">
-            <thead style="background-color: #f7f7f7; color: #333;">
-                <tr>
-                    <th>实验配置</th>
-                    <th>平均百分比误差 (MAPE)</th>
-                    <th>绝对误差 (Mae)</th>
-                    <th>均方误差 (MSE)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>VMD+TiDE+WOA</td>
-                    <td>{{ VMD_TiDE_WOA_mape | safe }}</td>
-                    <td>{{ VMD_TiDE_WOA_mae | safe }}</td>
-                    <td>{{ VMD_TiDE_WOA_mse | safe }}</td>
-                </tr>
-                <tr>
-                    <td>WOA+TiDE</td>
-                    <td>{{ TiDE_WOA_mape | safe }}</td>
-                    <td>{{ TiDE_WOA_mae | safe }}</td>
-                    <td>{{ TiDE_WOA_mse | safe }}</td>
-                </tr>
-                <tr>
-                    <td>VMD+TiDE</td>
-                    <td>{{ VMD_TiDE_mape | safe }}</td>
-                    <td>{{ VMD_TiDE_mae | safe }}</td>
-                    <td>{{ VMD_TiDE_mse | safe }}</td>
-                </tr>
-                <tr>
-                    <td>TiDE</td>
-                    <td>{{ TiDE_mape | safe }}</td>
-                    <td>{{ TiDE_mae | safe }}</td>
-                    <td>{{ TiDE_mse | safe }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="card-body" style="text-align: center; padding: 20px;">
-            {{ TiDE_error_chart | safe }}
-        </div>
-    </div>
-
-</div>
-
+<article class="system-card">
+    <header class="system-card-header">
+        <div><h2 data-i18n="tideTitle">TiDE 模型组</h2><p data-i18n="tideDesc">评估多尺度分解与智能优化在 TiDE 预测中的增益。</p></div>
+        <span class="model-badge">TIDE</span>
+    </header>
+    <div class="chart-panel">{{ TiDE_chart | safe }}</div>
+    {{ result_table('tide') }}
+    <div class="chart-panel">{{ TiDE_error_chart | safe }}</div>
+</article>
 {% endblock %}

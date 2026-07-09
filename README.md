@@ -45,6 +45,39 @@ The main workflow includes:
 
 ---
 
+## System Interface
+
+The web interface uses a consistent deep-navy and cyan industrial visual language and supports instant switching between Chinese and English. Its unified workspace covers preprocessing, model evaluation, and hyperparameter-search analysis.
+
+### Authentication
+
+Separate user and administrator portals provide demo credentials, language switching, and a concise introduction to the system.
+
+<p align="center">
+  <img src="static/login_page.png" alt="User login page" width="49%">
+  <img src="static/admin_login_page.png" alt="Administrator login page" width="49%">
+</p>
+
+### System Overview
+
+The overview presents the complete workflow, including wavelet denoising, VMD decomposition, TSMixer / TiDE forecasting, and WOA optimization.
+
+![System overview](static/manage_system.png)
+
+### Ablation-study Workspace
+
+Interactive prediction curves and metric tables show the contribution of VMD decomposition and WOA optimization across the forecasting models.
+
+![Ablation-study workspace](static/data_prediction.png)
+
+### WOA Hyperparameter Optimization
+
+The optimization page visualizes the relationships among input length, output length, hidden size, and MAPE in a three-dimensional search space.
+
+![WOA hyperparameter optimization](static/woa_scatter_page.png)
+
+---
+
 ## Repository Structure
 
 ```text
