@@ -224,7 +224,7 @@ def data_prediction():
     )
 
 
-@app.route("/WOA_scatter")
+@app.route("/woa_scatter_page")
 @admin_required
 def woa_scatter_page():
     """Render WOA hyperparameter-search scatter plots."""

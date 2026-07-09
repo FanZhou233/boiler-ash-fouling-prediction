@@ -1,5 +1,7 @@
 # PSBAF: Boiler Ash Fouling Prediction System
 
+[English](README.md) | [简体中文](README_zh-CN.md)
+
 PSBAF is a graduation-design portfolio project for boiler ash fouling prediction in coal-fired power plant boilers. The project integrates signal preprocessing, Variational Mode Decomposition (VMD), neural-network time-series forecasting, Whale Optimization Algorithm (WOA)-based hyperparameter optimization, ablation experiments, and a Flask-based visualization dashboard.
 
 The system is designed to predict the boiler cleaning factor and compare the effects of different modeling strategies, including TSMixer, TiDE, VMD-enhanced models, and WOA-optimized variants.
